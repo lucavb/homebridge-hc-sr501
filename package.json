@@ -1,0 +1,33 @@
+{
+  "name": "homebridge-hc-sr501",
+  "version": "1.0.0",
+  "description": "Homebridge plugin for the hc-sr501 motion sensor",
+  "main": "index.js",
+  "dependencies": {
+    "onoff": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucavb/homebridge-hc-sr501.git"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "author": "Luca Becker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucavb/homebridge-hc-sr501/issues"
+  },
+  "homepage": "https://github.com/lucavb/homebridge-hc-sr501#readme",
+  "engines" : {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  },
+  "dependencies" : {
+    "onoff" : "1.0.4"
+  }
+}
