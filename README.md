@@ -3,7 +3,7 @@ Homebridge plugin for the hc-sr501 motion sensor on a Raspberry Pi
 
 ## Installation of other plugins
 
-I assume that this [Guide](https://github.com/nfarina/homebridge/wiki/Running-HomeBridge-on-a-Raspberry-Pi) was followed, so your homebridge config file is under /var/homebridge and you used the systemd version. Create a folder called other_plugins in that hombridge folder and checkout this repository inside that newly created folder.
+I assume that this [Guide](https://github.com/nfarina/homebridge/wiki/Running-HomeBridge-on-a-Raspberry-Pi) was followed, so your homebridge config file is under /var/homebridge and you used the systemd version. Create a folder called other_plugins in that hombridge folder and checkout this repository inside that newly created folder. Change into that folder und run `npm i` to install any dependencies required for this plugin.
 
 Now you want to alter the file you placed under /etc/default/homebridge accordingly
 
