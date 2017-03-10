@@ -18,7 +18,7 @@
     "homebridge-plugin"
   ],
   "author": "Luca Becker",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/lucavb/homebridge-hc-sr501/issues"
   },
@@ -26,8 +26,5 @@
   "engines" : {
     "node": ">=0.12.0",
     "homebridge": ">=0.2.0"
-  },
-  "dependencies" : {
-    "onoff" : "1.0.4"
   }
 }
