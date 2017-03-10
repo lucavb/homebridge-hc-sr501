@@ -9,7 +9,6 @@ module.exports = function(homebridge) {
     Characteristic = homebridge.hap.Characteristic;
     HomebridgeAPI = homebridge;
 
-    // console.log(Service.ContactSensor);
     homebridge.registerAccessory("homebridge-hc-sr501", "HC-SR501", SR501);
 };
 
@@ -41,7 +40,7 @@ function SR501(log, config) {
 	var that = this;
 	this.motionSensor.watch(function(err, value) {
 		that.service.getCharacteristic(Characteristic.MotionDetected)
-			.setValue(value);
+            		.updateValue(value, null, "motionsensor_handler");
 	});
 
 	process.on('SIGINT', function () {
