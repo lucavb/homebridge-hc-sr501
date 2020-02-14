@@ -3,7 +3,11 @@ import { HomebridgeHCSR501Config } from './types';
 import { MotionSensor } from 'hap-nodejs/dist/lib/gen/HomeKit';
 import { Gpio, BinaryValue } from 'onoff';
 
+let homebridgeService;
+
 export default function (homebridge: any): void {
+    homebridgeService = homebridge.hap.Service;
+
     homebridge.registerAccessory("homebridge-http-motion-sensor", "http-motion-sensor", HomebridgeSR501Sensor);
 };
 
@@ -18,7 +22,7 @@ class HomebridgeSR501Sensor {
 
     constructor(log: any, private config: HomebridgeHCSR501Config) {
         this.gpio = new Gpio(this.config.pinId, 'in', 'both');
-        this.motionSensorService = new MotionSensor(this.config.name, 'sr501_sensor_information');
+        this.motionSensorService = new homebridgeService.MotionSensor(this.config.name, 'sr501_sensor_information');
         this.motionSensorService.getCharacteristic(Characteristic.MotionDetected)?.
             on(CharacteristicEventTypes.GET, this.getState.bind(this));
 
@@ -26,7 +30,7 @@ class HomebridgeSR501Sensor {
             if (!err) {
                 this.motionSensorService.getCharacteristic(Characteristic.MotionDetected)?.updateValue(value);
             } else {
-                log.error(err);
+                log.log(err);
             }
         });
     }

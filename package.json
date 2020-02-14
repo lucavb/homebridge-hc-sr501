@@ -2,14 +2,14 @@
     "name": "homebridge-hc-sr501",
     "version": "1.0.1",
     "description": "Homebridge plugin for the hc-sr501 motion sensor",
-    "main": "index.js",
+    "main": "dist/index.js",
     "dependencies": {
-        "onoff": "^5.0.1"
+        "onoff": "^5.0.1",
+        "hap-nodejs": "^0.5.6"
     },
     "devDependencies": {
         "@types/node": "^13.7.1",
-        "@types/onoff": "^4.1.0",
-        "hap-nodejs": "^0.5.6"
+        "@types/onoff": "^4.1.0"
     },
     "scripts": {
 		"build": "tsc --outDir dist/"
