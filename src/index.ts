@@ -8,7 +8,7 @@ let homebridgeService;
 export default function (homebridge: any): void {
     homebridgeService = homebridge.hap.Service;
 
-    homebridge.registerAccessory("homebridge-http-motion-sensor", "http-motion-sensor", HomebridgeSR501Sensor);
+    homebridge.registerAccessory("homebridge-hc-sr501", "HC-SR501", HomebridgeSR501Sensor);
 };
 
 
