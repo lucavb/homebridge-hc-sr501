@@ -1,6 +1,6 @@
 {
     "name": "homebridge-hc-sr501",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Homebridge plugin for the hc-sr501 motion sensor",
     "main": "dist/index.js",
     "files": [
