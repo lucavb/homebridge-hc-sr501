@@ -1,4 +1,3 @@
-
 export interface HomebridgeHCSR501Config {
     name: string;
     pinId: number;
