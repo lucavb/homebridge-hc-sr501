@@ -1,26 +1,29 @@
-import {
-    Characteristic,
-    Service,
-    CharacteristicEventTypes,
-    CharacteristicGetCallback,
-} from 'hap-nodejs';
 import { HomebridgeHCSR501Config } from './types';
-import { Gpio, BinaryValue } from 'onoff';
+import { BinaryValue, Gpio } from 'onoff';
+import {
+    API,
+    Characteristic,
+    CharacteristicGetCallback,
+    Logging,
+} from 'homebridge';
+import { Service } from 'hap-nodejs';
 import {
     AccessoryInformation,
     MotionSensor,
 } from 'hap-nodejs/dist/lib/gen/HomeKit';
-import { API, Logging } from 'homebridge';
 
 let HBService: typeof Service;
+let HBCharacteristic: typeof Characteristic;
 
-export default function (homebridge: API): void {
+const MODEL_NAME = 'HC-SR501';
+
+export default (homebridge: API): void => {
     homebridge.registerAccessory(
         'homebridge-hc-sr501',
         'HC-SR501',
         HomebridgeSR501Sensor
     );
-}
+};
 
 class HomebridgeSR501Sensor {
     private readonly gpio: Gpio;
@@ -36,31 +39,41 @@ class HomebridgeSR501Sensor {
         private readonly config: Partial<HomebridgeHCSR501Config>,
         private readonly api: API
     ) {
-        HBService = api.hap.Service;
+        HBService = this.api.hap.Service;
+        HBCharacteristic = this.api.hap.Characteristic;
 
         // info service
-        this.informationService = new Service.AccessoryInformation(
-            this.config.name
+        this.informationService = new HBService.AccessoryInformation(
+            this.config.name ?? MODEL_NAME
         );
 
         this.informationService
-            .setCharacteristic(Characteristic.Manufacturer, 'PIR Manufacturer')
-            .setCharacteristic(Characteristic.Model, config.model || 'HC-SR501')
             .setCharacteristic(
-                Characteristic.SerialNumber,
-                config.serial || '4BD53931-D4A9-4850-8E7D-8A51A942FA29'
+                HBCharacteristic.Manufacturer,
+                'PIR Manufacturer'
+            )
+            .setCharacteristic(
+                HBCharacteristic.Model,
+                config.model ?? MODEL_NAME
+            )
+            .setCharacteristic(
+                HBCharacteristic.SerialNumber,
+                config.serial ?? '4BD53931-D4A9-4850-8E7D-8A51A942FA29'
             );
 
         this.gpio = new Gpio(this.config.pinId, 'in', 'both');
         this.motionSensorService = new HBService.MotionSensor(this.config.name);
         this.motionSensorService
-            .getCharacteristic(Characteristic.MotionDetected)
-            ?.on(CharacteristicEventTypes.GET, this.getState.bind(this));
+            .getCharacteristic(HBCharacteristic.MotionDetected)
+            ?.on(
+                this.api.hap.CharacteristicEventTypes.GET,
+                this.getState.bind(this)
+            );
 
         this.gpio.watch((err: Error, value: BinaryValue) => {
             if (!err) {
                 this.motionSensorService
-                    .getCharacteristic(Characteristic.MotionDetected)
+                    .getCharacteristic(HBCharacteristic.MotionDetected)
                     ?.updateValue(value);
             } else {
                 this.log(err.name, err.message);
