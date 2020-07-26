@@ -43,9 +43,7 @@ class HomebridgeSR501Sensor {
         HBCharacteristic = this.api.hap.Characteristic;
 
         // info service
-        this.informationService = new HBService.AccessoryInformation(
-            this.config.name ?? MODEL_NAME
-        );
+        this.informationService = new HBService.AccessoryInformation();
 
         this.informationService
             .setCharacteristic(
