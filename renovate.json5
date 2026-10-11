@@ -1,0 +1,61 @@
+{
+    $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+    extends: ['config:recommended', ':automergeLinters', ':automergeTesters', ':automergeTypes'],
+    addLabels: ['dependencies'],
+    automergeType: 'branch',
+    prConcurrentLimit: 5,
+    rebaseWhen: 'behind-base-branch',
+    semanticCommits: 'enabled',
+    semanticCommitType: 'chore',
+    semanticCommitScope: 'deps',
+    vulnerabilityAlerts: {
+        enabled: true,
+        addLabels: ['security-update'],
+    },
+    lockFileMaintenance: {
+        enabled: true,
+        automerge: true,
+    },
+    packageRules: [
+        {
+            matchUpdateTypes: ['patch'],
+            matchCurrentAge: '2 days',
+            automerge: true,
+            addLabels: ['automerge:patch'],
+        },
+        {
+            matchUpdateTypes: ['minor'],
+            matchCurrentAge: '5 days',
+            automerge: true,
+            addLabels: ['automerge:minor'],
+        },
+        {
+            matchDepTypes: ['devDependencies'],
+            matchUpdateTypes: ['patch'],
+            matchCurrentAge: '1 day',
+            automerge: true,
+            addLabels: ['automerge:dev-patch'],
+        },
+        {
+            matchUpdateTypes: ['major'],
+            automerge: false,
+            addLabels: ['manual-review:major'],
+            reviewers: ['lucavb'],
+        },
+        {
+            description: 'Block typescript major updates: the TS7 native compiler has no programmatic API yet, typescript-eslint cannot integrate (typescript-eslint#10940)',
+            matchPackageNames: ['typescript'],
+            matchUpdateTypes: ['major'],
+            enabled: false,
+        },
+        {
+            description: 'Block conventional-changelog-conventionalcommits majors: v10 requires conventional-changelog-writer@9, semantic-release 25 ships writer@8',
+            matchPackageNames: ['conventional-changelog-conventionalcommits'],
+            matchUpdateTypes: ['major'],
+            enabled: false,
+        },
+    ],
+    timezone: 'Europe/Berlin',
+    minimumReleaseAge: '2 days',
+    fetchChangeLogs: 'pr',
+}

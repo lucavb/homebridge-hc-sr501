@@ -1,0 +1,69 @@
+{
+    "pluginAlias": "HcSr501Platform",
+    "pluginType": "platform",
+    "singular": true,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+                "title": "Platform Name",
+                "default": "HC-SR501",
+                "required": true
+            },
+            "platform": {
+                "type": "string",
+                "title": "Platform Type",
+                "const": "HcSr501Platform",
+                "required": true
+            },
+            "sensors": {
+                "type": "array",
+                "title": "Motion Sensors",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "title": "Sensor Name",
+                            "description": "The name of this sensor as shown in your HomeKit app.",
+                            "required": true
+                        },
+                        "pin": {
+                            "type": "integer",
+                            "title": "GPIO Pin (BCM numbering)",
+                            "description": "The BCM pin number the motion sensor is connected to.",
+                            "minimum": 0,
+                            "maximum": 40,
+                            "required": true
+                        },
+                        "pinId": {
+                            "type": "integer",
+                            "title": "GPIO Pin (deprecated, use pin)",
+                            "minimum": 0,
+                            "maximum": 40
+                        },
+                        "model": {
+                            "type": "string",
+                            "title": "Model",
+                            "description": "Overrides the model name shown in the HomeKit accessory information."
+                        },
+                        "serial": {
+                            "type": "string",
+                            "title": "Serial Number",
+                            "description": "Overrides the serial number shown in the HomeKit accessory information."
+                        },
+                        "invert": {
+                            "type": "boolean",
+                            "title": "Invert Signal",
+                            "description": "Set to true if your sensor outputs LOW on motion.",
+                            "default": false
+                        }
+                    },
+                    "required": ["name", "pin"]
+                }
+            }
+        },
+        "required": ["name", "sensors"]
+    }
+}

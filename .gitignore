@@ -39,3 +39,10 @@ jspm_packages
 .idea
 
 dist
+
+# Test files
+.tmp/
+config/
+manual-test/
+debug-test/
+.opencode.json

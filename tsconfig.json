@@ -1,13 +1,22 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
+        "allowImportingTsExtensions": true,
         "declaration": true,
-        "strict": false,
+        "declarationMap": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "outDir": "dist"
+        "lib": ["ES2023"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "rewriteRelativeImportExtensions": true,
+        "rootDir": "./src",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES2023",
+        "types": ["node"]
     },
-    "include": ["src"],
-    "exclude": ["node_modules"]
+    "include": ["src/"],
+    "exclude": ["**/*.spec.ts", "dist", "node_modules"]
 }

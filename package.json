@@ -1,50 +1,107 @@
 {
     "name": "homebridge-hc-sr501",
     "version": "1.0.7",
-    "description": "Homebridge plugin for the hc-sr501 motion sensor",
-    "main": "dist/index.js",
-    "files": [
-        "dist/*"
+    "description": "Homebridge plugin for PIR motion sensors like the HC-SR501 connected to a Raspberry Pi GPIO pin",
+    "keywords": [
+        "gpio",
+        "hc-sr501",
+        "homebridge",
+        "homebridge-plugin",
+        "homekit",
+        "libgpiod",
+        "motion",
+        "motion-sensor",
+        "pir",
+        "raspberry-pi",
+        "smart-home"
     ],
-    "dependencies": {
-        "onoff": "^6.0.0"
+    "homepage": "https://github.com/lucavb/homebridge-hc-sr501#readme",
+    "bugs": {
+        "url": "https://github.com/lucavb/homebridge-hc-sr501/issues"
     },
-    "devDependencies": {
-        "@types/node": "^13.7.1",
-        "@types/onoff": "^4.1.0",
-        "@typescript-eslint/eslint-plugin": "^3.0.0",
-        "@typescript-eslint/parser": "^3.0.0",
-        "eslint": "^7.0.0",
-        "eslint-config-google": "^0.14.0",
-        "hap-nodejs": "^0.7.7",
-        "homebridge": "^1.1.1",
-        "prettier": "^2.0.5",
-        "typescript": "^3.9.3"
-    },
-    "scripts": {
-        "format": "npx eslint --fix src/**/*.ts",
-        "prepare": "npm run cbuild",
-        "build": "npx tsc",
-        "test": "npx jest",
-        "clean": "rm -rf dist",
-        "cbuild": "npm run clean && npm run build"
-    },
-    "prepare": "npm run build",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/lucavb/homebridge-hc-sr501.git"
     },
-    "keywords": [
-        "homebridge-plugin"
-    ],
-    "author": "Luca Becker",
     "license": "GPL-3.0",
-    "bugs": {
-        "url": "https://github.com/lucavb/homebridge-hc-sr501/issues"
+    "author": {
+        "name": "Luca Becker",
+        "email": "hello@luca-becker.me",
+        "url": "https://luca-becker.me"
     },
-    "homepage": "https://github.com/lucavb/homebridge-hc-sr501#readme",
+    "sideEffects": false,
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "files": [
+        "config.schema.json",
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsdown",
+        "commitlint": "commitlint --edit",
+        "cq": "npm run cq:typecheck && npm run cq:eslint && npm run cq:prettier && npm run build",
+        "cq:eslint": "eslint . --max-warnings=0",
+        "cq:eslint:fix": "eslint . --max-warnings=0 --fix",
+        "cq:prettier": "prettier --check .",
+        "cq:prettier:fix": "prettier --write .",
+        "cq:typecheck": "tsc --noEmit",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build",
+        "publishd": "npm publish --dry-run",
+        "release": "semantic-release",
+        "release:dry-run": "semantic-release --dry-run",
+        "start": "npm run build && homebridge -D -U .tmp -P .",
+        "test": "vitest run",
+        "test:ci": "vitest run --reporter=verbose",
+        "test:watch": "vitest"
+    },
+    "dependencies": {
+        "@bratbit/onoff": "1.0.7",
+        "zod": "4.6.5"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "21.2.3",
+        "@commitlint/config-conventional": "21.2.3",
+        "@commitlint/types": "21.2.3",
+        "@eslint/js": "10.0.1",
+        "@semantic-release/commit-analyzer": "13.0.1",
+        "@semantic-release/github": "12.0.10",
+        "@semantic-release/npm": "13.2.0",
+        "@semantic-release/release-notes-generator": "14.1.1",
+        "@types/node": "24.19.1",
+        "@vitest/eslint-plugin": "1.6.27",
+        "conventional-changelog-conventionalcommits": "9.3.1",
+        "eslint": "10.12.0",
+        "globals": "17.13.0",
+        "homebridge": "2.4.0",
+        "husky": "9.1.7",
+        "jiti": "2.7.0",
+        "prettier": "3.9.9",
+        "semantic-release": "25.0.9",
+        "tsdown": "0.23.0",
+        "typescript": "6.0.3",
+        "typescript-eslint": "8.71.1",
+        "vitest": "5.0.3"
+    },
+    "peerDependencies": {
+        "homebridge": "^1.6.0 || ^2.0.0"
+    },
     "engines": {
-        "node": ">=0.12.0",
-        "homebridge": ">=0.2.0"
+        "homebridge": "^1.6.0 || ^2.0.0",
+        "node": "^22.12.0 || ^24.0.0"
+    },
+    "publishConfig": {
+        "access": "public",
+        "provenance": true,
+        "registry": "https://registry.npmjs.org/"
     }
 }
